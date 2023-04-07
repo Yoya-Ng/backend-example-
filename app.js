@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 });
 
 connection.connect();
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+connection.query('SELECT 1 + 1 AS solution;', function(err, rows, fields) {
   if (err) throw err;
   console.log('The solution is: ', rows[0].solution);
 });
@@ -34,7 +34,7 @@ app.get('/hello', (req, res) => {
 
 
 app.get('/hello2', (req, res) => {
-  connection.query('SELECT * FROM name', (err, results, fields) => {
+  connection.query('SELECT * FROM name;', (err, results, fields) => {
     if (err) {
       res.send("NONO" + err);
     }
