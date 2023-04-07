@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-    host: 'instance-1',
+    host: 'localhost',
     user: 'root',
     password: 'adminroot',
     database:'test',
-    port: 3306
+    insecureAuth: true // 加上這個屬性
 });
 
 connection.connect((err) => {
@@ -31,11 +31,11 @@ app.get('/hello', (req, res) => {
 
 
 app.get('/hello2', (req, res) => {
-  connection.query('SELECT * FROM persons', (err, results, fields) => {
+  connection.query('SELECT * FROM name', (err, results, fields) => {
     if (err) {
-      res.send("NONO" , err.stack);
+      res.send("NONO" + err);
     }
-    res.send("OKOKOKOKOK");
+    res.json(results);
   });
 });
 
