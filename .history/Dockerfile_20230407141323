@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app/
 
 # Install dep
-RUN yarn install
+RUN npm install
 
 # Start App
 CMD ["npm", "run", "start"]
