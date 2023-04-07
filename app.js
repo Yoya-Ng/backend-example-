@@ -1,8 +1,26 @@
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'adminroot',
+    database:'test',
+    port: 3306
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to MySQL database.');
+});
+
+
 const express = require('express')
 const app = express()
 const port = 3001
 const cors = require('cors');
-const db = require('./db.js');
 
 
 app.use(cors());
@@ -13,24 +31,26 @@ app.get('/hello', (req, res) => {
 
 
 app.get('/hello2', (req, res) => {
-  db.query('SELECT * FROM persons;', (error, results) => {
-    if (error) throw error;
+  connection.query('SELECT * FROM users', (err, results, fields) => {
+    if (err) {
+      console.error('Error querying MySQL database: ' + err.stack);
+      return;
+    }
     res.send(results);
   });
 });
 
 app.get('/hello3', (req, res) => {
   // 選擇資料庫
-  db.query('USE test;', function (error, results, fields) {
+  connection.query('USE test;', function (error, results, fields) {
     if (error) throw error;
     // 執行 SQL 語句
-    db.query('SELECT * FROM persons;', function (error, results, fields) {
+    connection.query('SELECT * FROM persons;', function (error, results, fields) {
       if (error) throw error;
       console.log(results);
     });
   });
 });
-
 
 
 
