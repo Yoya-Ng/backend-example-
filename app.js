@@ -33,10 +33,9 @@ app.get('/hello', (req, res) => {
 app.get('/hello2', (req, res) => {
   connection.query('SELECT * FROM persons', (err, results, fields) => {
     if (err) {
-      console.error('Error querying MySQL database: ' + err.stack);
-      return;
+      res.send("NONO" , err.stack);
     }
-    res.send(results);
+    res.send("OKOKOKOKOK");
   });
 });
 
