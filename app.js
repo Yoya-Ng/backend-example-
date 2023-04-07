@@ -5,6 +5,7 @@ const connection = mysql.createConnection({
     user: 'root',
     password: 'adminroot',
     database:'test',
+    port: 3306,
     insecureAuth: true // 加上這個屬性
 });
 
