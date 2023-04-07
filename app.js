@@ -31,24 +31,12 @@ app.get('/hello', (req, res) => {
 
 
 app.get('/hello2', (req, res) => {
-  connection.query('SELECT * FROM users', (err, results, fields) => {
+  connection.query('SELECT * FROM persons', (err, results, fields) => {
     if (err) {
       console.error('Error querying MySQL database: ' + err.stack);
       return;
     }
     res.send(results);
-  });
-});
-
-app.get('/hello3', (req, res) => {
-  // 選擇資料庫
-  connection.query('USE test;', function (error, results, fields) {
-    if (error) throw error;
-    // 執行 SQL 語句
-    connection.query('SELECT * FROM persons;', function (error, results, fields) {
-      if (error) throw error;
-      console.log(results);
-    });
   });
 });
 
