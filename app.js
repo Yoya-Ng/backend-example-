@@ -1,12 +1,11 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
     password: 'adminroot',
     database:'test',
     socketPath: '/tmp/mysql.sock',
-    insecureAuth: true // 加上這個屬性
 });
 
 connection.connect((err) => {
