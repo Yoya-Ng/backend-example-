@@ -25,9 +25,8 @@ const connection2 = mysql.createConnection({
 connection.connect(function(err) {
   if (err) {
     console.error('error connecting: ' + err);
-  } else {
-  console.log("Connected!");
   }
+  console.log("Connected!");
 });
 
 connection.ping((err) => {
@@ -41,9 +40,8 @@ connection.ping((err) => {
 connection2.connect(function(err) {
   if (err) {
     console.error('error connecting: ' + err);
-  } else {
-    console.log("Connected!2");
-    }
+  }
+    console.log("Connected2!");
 });
 
 connection2.ping((err) => {
