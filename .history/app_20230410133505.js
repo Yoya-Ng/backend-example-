@@ -14,9 +14,9 @@ const connection = mysql.createConnection({
 });
 
 const connection2 = mysql.createConnection({
-  socketPath: '/var/run/mysqld/mysqld.sock',
-  user: 'root',
-  password: 'adminroot',
+  host: 'localhost',
+  user: 'user',
+  password: '123',
   database: 'test'
 });
 
