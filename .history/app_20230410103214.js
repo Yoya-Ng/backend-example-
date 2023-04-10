@@ -38,5 +38,5 @@ app.get('/hello2', (req, res) => {
 
 
 app.listen(port, () => {
-  console.log('Server listening on port '+ {port});
+  console.log('Server listening on port 80');
 })
