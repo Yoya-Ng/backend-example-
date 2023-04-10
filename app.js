@@ -55,7 +55,7 @@ app.get('/hello2', function(req, res){
   });
 
 // 監聽本地端 3000 port
-const port = process.env.PORT || 3000;
+const port = 80;
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });

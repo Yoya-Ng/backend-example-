@@ -5,9 +5,12 @@ FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
 # Prepare the container for building React
-RUN yarn install
+
 # Copy the React App to the container
 COPY . /app/
 
+RUN yarn install
+
+EXPOSE 80
 # Start App
 CMD ["npm", "run", "start"]
