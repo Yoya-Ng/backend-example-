@@ -18,51 +18,75 @@ const pool3 = mysql.createPool({
   user: 'user',
   password: 'admintest',
   database: 'test'
-});
+});  
+
+const pool4 = mysql.createPool({
+  socketPath: '/var/run/mysqld/mysqld.sock',
+  user: 'root',
+  password: 'adminroot',
+  database: 'test'
+});  
 
 // 引入 express 並使用
 const express = require('express');
 const app = express();
+
 app.get('/hello', (req, res) => {
-    res.send('Hello World!!!!!')
+  res.send('Hello World!!!!!')
 });
 
-app.get('/hello2', function(req, res){
-    // 接上連接池
-    pool.getConnection((err, connection) => {
-      if (err) throw err;
-      // 輸入 SQL 語法查詢
-      connection.query('SELECT * FROM name limit 1',   
-      (err, rows, fields) => {
-        if (err) throw err;
-        // 送出查詢結果
-        res.send(rows);
-        // 斷開連結
-        connection.release();
-      });
-    });
+app.get('/hello2', function (req, res) {
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return;
+    } else {
+      console.log("Connected!");
+    }
   });
+});
 
-  app.get('/hello3', function(req, res){
-    // 接上連接池
-    pool2.getConnection((err, connection) => {
-      if (err) throw err;
-      // 輸入 SQL 語法查詢
-      connection.query('SELECT * FROM user limit 1',   
-      (err, rows, fields) => {
-        if (err) throw err;
-        // 送出查詢結果
-        res.send(rows);
-        // 斷開連結
-        connection.release();
-      });
-    });
+app.get('/hello3', function (req, res) {
+  // 接上連接池
+  pool2.getConnection((err, connection) => {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return;
+    } else {
+      console.log("Connected!");
+    }
   });
+});
+
+app.get('/hello4', function (req, res) {
+  // 接上連接池
+  pool3.getConnection((err, connection) => {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return;
+    } else {
+      console.log("Connected!");
+    }
+  });
+});
+
+app.get('/hello5', function (req, res) {
+  // 接上連接池
+  pool4.getConnection((err, connection) => {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return;
+    } else {
+      console.log("Connected!");
+    }
+  });
+});
 
 // 監聽本地端 3000 port
 const port = 80;
 app.listen(port, () => {
-    console.log(`Listening on port ${port}...`);
+  console.log(`Listening on port ${port}...`);
 });
 
 
