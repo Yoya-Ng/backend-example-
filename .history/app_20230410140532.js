@@ -62,6 +62,11 @@ app.get('/DB', (req, res) => {
   });
 });
 
+app.get('/hello', (req, res) => {
+  res.send('Hello World!!!!!')
+})
+
+
 app.get('/hello2', (req, res) => {
   connection.query('SELECT * FROM name;', (err, results, fields) => {
     if (err) {

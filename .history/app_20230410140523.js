@@ -1,7 +1,7 @@
 const express = require('express')
+const mysql = require('mysql');
 const app = express()
 const port = 80
-const mysql = require('mysql');
 const cors = require('cors');
 app.use(cors());
 
@@ -61,6 +61,11 @@ app.get('/DB', (req, res) => {
     }
   });
 });
+
+app.get('/hello', (req, res) => {
+  res.send('Hello World!!!!!')
+})
+
 
 app.get('/hello2', (req, res) => {
   connection.query('SELECT * FROM name;', (err, results, fields) => {
