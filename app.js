@@ -1,6 +1,5 @@
 const mysql = require('mysql');
 const pool = mysql.createPool({
-  connectionLimit: 10,
   host: 'localhost',
   user: 'user',
   password: 'admintest',
@@ -8,10 +7,16 @@ const pool = mysql.createPool({
 });
 
 const pool2 = mysql.createPool({
-  connectionLimit: 10,
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
+  database: 'mysql'
+});
+
+const pool3 = mysql.createPool({
+  socketPath: '/var/run/mysqld/mysqld.sock',
+  user: 'user',
+  password: 'admintest',
   database: 'test'
 });
 
@@ -43,7 +48,7 @@ app.get('/hello2', function(req, res){
     pool2.getConnection((err, connection) => {
       if (err) throw err;
       // 輸入 SQL 語法查詢
-      connection.query('SELECT * FROM name limit 1',   
+      connection.query('SELECT * FROM user limit 1',   
       (err, rows, fields) => {
         if (err) throw err;
         // 送出查詢結果
