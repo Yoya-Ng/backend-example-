@@ -7,7 +7,7 @@ COPY package*.json ./
 # Prepare the container for building React
 
 # Copy the React App to the container
-COPY . /app/
+COPY . .
 
 RUN yarn install
 
