@@ -8,15 +8,10 @@ app.use(cors());
 
 const connection = mysql.createConnection({
     host: '127.0.0.1',
-    user: 'user',
-    password: 'admintest',
+    user: 'root',
+    password: 'adminroot',
     database:'test',
     useConnectionPooling: true //增加该配置
-});
-
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
 });
 
 connection.ping((err) => {

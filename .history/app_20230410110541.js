@@ -8,8 +8,8 @@ app.use(cors());
 
 const connection = mysql.createConnection({
     host: '127.0.0.1',
-    user: 'user',
-    password: 'admintest',
+    user: 'root',
+    password: 'adminroot',
     database:'test',
     useConnectionPooling: true //增加该配置
 });
