@@ -1,11 +1,32 @@
+const mysql = require('mysql');
 const express = require('express')
 const app = express()
 const port = 80
 const cors = require('cors');
-const db = require('./db.js');
-
-
 app.use(cors());
+
+
+const connection = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'adminroot',
+    database:'test'
+});
+
+connection.connect();
+connection.query('SELECT 1 + 1 AS solution;', function(err, rows, fields) {
+  if (err) throw err;
+  console.log('The solution is: ', rows[0].solution);
+});
+connection.end();
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+  console.log('connected as id ' + connection.threadId);
+});
 
 app.get('/hello', (req, res) => {
   res.send('Hello World!!!!!')
@@ -13,24 +34,13 @@ app.get('/hello', (req, res) => {
 
 
 app.get('/hello2', (req, res) => {
-  db.query('SELECT * FROM persons;', (error, results) => {
-    if (error) throw error;
-    res.send(results);
+  connection.query('SELECT * FROM name;', (err, results, fields) => {
+    if (err) {
+      res.send("NONO" + err);
+    }
+    res.json(results);
   });
 });
-
-app.get('/hello3', (req, res) => {
-  // 選擇資料庫
-  db.query('USE test;', function (error, results, fields) {
-    if (error) throw error;
-    // 執行 SQL 語句
-    db.query('SELECT * FROM persons;', function (error, results, fields) {
-      if (error) throw error;
-      console.log(results);
-    });
-  });
-});
-
 
 
 
