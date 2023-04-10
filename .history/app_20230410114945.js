@@ -17,8 +17,10 @@ const connection = mysql.createConnection({
 const connection2 = mysql.createConnection({
   host: 'localhost',
   user: 'user',
-  password: '123',
-  database: 'test'
+  password: 'admintest',
+  database: 'test',
+  port: 3306,
+  connectionLimit: 10
 });
 
 connection.connect(function (err) {
