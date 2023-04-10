@@ -21,16 +21,6 @@ connection.ping((err) => {
   }
 });
 
-app.get('/DB', (req, res) => {
-  connection.ping((err) => {
-    if (err) {
-      res.send('error connecting: ' + err);
-    } else {
-      res.send('connected OKOK');
-    }
-  });
-});
-
 app.get('/hello', (req, res) => {
   res.send('Hello World!!!!!')
 })
