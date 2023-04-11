@@ -51,7 +51,7 @@ pool.getConnection((err, connection) => {
 
 // // 引入 express 並使用
 // const express = require('express');
-// const app = express();
+const app = express();
 // const cors = require('cors');
 // app.use(cors());
 // app.get('/hello', (req, res) => {
