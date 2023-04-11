@@ -1,31 +1,42 @@
 const mysql = require('mysql');
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'user',
-  password: 'admintest',
+  user: 'root',
+  password: 'adminroot',
   database: 'test'
 });
 
-const pool2 = mysql.createPool({
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('error connecting: ' + err);
+    return;
+  } else {
+    console.log("pool Connected!");
+  }
+});
+
+const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
-  database: 'mysql'
+  database: 'test'
 });
 
-const pool3 = mysql.createPool({
-  socketPath: '/var/run/mysqld/mysqld.sock',
-  user: 'user',
-  password: 'admintest',
-  database: 'test'
-});  
+connection.connect(function (err) {
+  if (err) {
+    console.error('error connecting: ' + err);
+  } else {
+    console.log("Connected!");
+  }
+});
 
-const pool4 = mysql.createPool({
-  socketPath: '/var/run/mysqld/mysqld.sock',
-  user: 'root',
-  password: 'adminroot',
-  database: 'test'
-});  
+connection.query('SELECT * FROM name', (err, results, fields) => {
+  if (err) {
+    console.log("Connected!" , err);
+  }
+  console.log("Connected!", results);
+});
+
 
 // 引入 express 並使用
 const express = require('express');
@@ -47,41 +58,41 @@ app.get('/hello2', function (req, res) {
   });
 });
 
-app.get('/hello3', function (req, res) {
-  // 接上連接池
-  pool2.getConnection((err, connection) => {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return;
-    } else {
-      console.log("Connected!");
-    }
-  });
-});
+// app.get('/hello3', function (req, res) {
+//   // 接上連接池
+//   pool2.getConnection((err, connection) => {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return;
+//     } else {
+//       console.log("Connected!");
+//     }
+//   });
+// });
 
-app.get('/hello4', function (req, res) {
-  // 接上連接池
-  pool3.getConnection((err, connection) => {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return;
-    } else {
-      console.log("Connected!");
-    }
-  });
-});
+// app.get('/hello4', function (req, res) {
+//   // 接上連接池
+//   pool3.getConnection((err, connection) => {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return;
+//     } else {
+//       console.log("Connected!");
+//     }
+//   });
+// });
 
-app.get('/hello5', function (req, res) {
-  // 接上連接池
-  pool4.getConnection((err, connection) => {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return;
-    } else {
-      console.log("Connected!");
-    }
-  });
-});
+// app.get('/hello5', function (req, res) {
+//   // 接上連接池
+//   pool4.getConnection((err, connection) => {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return;
+//     } else {
+//       console.log("Connected!");
+//     }
+//   });
+// });
 
 // 監聽本地端 3000 port
 const port = 80;
