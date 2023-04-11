@@ -1,19 +1,34 @@
-const mariadb  = require('mariadb');
-const pool = mariadb .createPool({
+const mariadb = require('mariadb');
+const pool = mariadb.createPool({
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
   database: 'test'
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
+async function asyncFunction() {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const rows = await conn.query('SELECT * FROM yourtable');
+    console.log(rows);
+  } catch (err) {
     console.error('error connecting: ' + err);
-    return;
-  } else {
-    console.log("pool Connected!");
+  } finally {
+    if (conn) return conn.end();
   }
-});
+}
+
+asyncFunction();
+
+// pool.getConnection((err, connection) => {
+//   if (err) {
+//     console.error('error connecting: ' + err);
+//     return;
+//   } else {
+//     console.log("pool Connected!");
+//   }
+// });
 
 // const connection = mysql.createConnection({
 //   host: 'http://localhost:3306',
