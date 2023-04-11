@@ -1,10 +1,9 @@
-const mysql = require('mysql');
-const pool = mysql.createPool({
-  host: 'localhost:3306',
+const mariadb  = require('mariadb');
+const pool = mariadb .createPool({
+  host: 'localhost',
   user: 'root',
   password: 'adminroot',
-  database: 'test',
-  port: '3306'
+  database: 'test'
 });
 
 pool.getConnection((err, connection) => {
@@ -16,60 +15,60 @@ pool.getConnection((err, connection) => {
   }
 });
 
-const connection = mysql.createConnection({
-  host: 'http://localhost:3306',
-  user: 'root',
-  password: 'adminroot',
-  database: 'test',
-  port: '3306',
-  socketPath: '/run/mysqld/mysqld.sock'
-});
-function handleerror() {
+// const connection = mysql.createConnection({
+//   host: 'http://localhost:3306',
+//   user: 'root',
+//   password: 'adminroot',
+//   database: 'test',
+//   port: '3306',
+//   socketPath: '/run/mysqld/mysqld.sock'
+// });
+// function handleerror() {
 
-  connection.connect(function (err) {
-    if (err) {
-      console.error('error connecting: ' + err);
-      setTimeout(handleerror, 2000);
-    } else {
-      console.log("Connected!");
-    }
-  });
+//   connection.connect(function (err) {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       setTimeout(handleerror, 2000);
+//     } else {
+//       console.log("Connected!");
+//     }
+//   });
 
-  connection.on('error', function (err) {
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleerror();
-    }
-  })
-}
-handleerror();
-connection.query('SELECT * FROM name', (err, results, fields) => {
-  if (err) {
-    console.log("Connected!", err);
-  }
-  console.log("Connected!", results);
-});
+//   connection.on('error', function (err) {
+//     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+//       handleerror();
+//     }
+//   })
+// }
+// handleerror();
+// connection.query('SELECT * FROM name', (err, results, fields) => {
+//   if (err) {
+//     console.log("Connected!", err);
+//   }
+//   console.log("Connected!", results);
+// });
 
 
-// 引入 express 並使用
-const express = require('express');
-const app = express();
-const cors = require('cors');
-app.use(cors());
-app.get('/hello', (req, res) => {
-  res.send('Hello World!!!!!')
-});
+// // 引入 express 並使用
+// const express = require('express');
+// const app = express();
+// const cors = require('cors');
+// app.use(cors());
+// app.get('/hello', (req, res) => {
+//   res.send('Hello World!!!!!')
+// });
 
-app.get('/hello2', function (req, res) {
-  // 接上連接池
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return;
-    } else {
-      console.log("Connected!");
-    }
-  });
-});
+// app.get('/hello2', function (req, res) {
+//   // 接上連接池
+//   pool.getConnection((err, connection) => {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return;
+//     } else {
+//       console.log("Connected!");
+//     }
+//   });
+// });
 
 // app.get('/hello3', function (req, res) {
 //   // 接上連接池
