@@ -9,7 +9,7 @@ const connection = mariadb.createConnection({
 connection.connect(function(err) {
   if (err) {
     console.error('Error connecting to MariaDB: ' + err.stack);
-    return;
+    return; 
   }
   console.log('Connected to MariaDB as ID ' + connection.threadId);
 });
@@ -62,23 +62,21 @@ connection.end();
 // // 引入 express 並使用
 const express = require('express');
 const app = express();
-// const cors = require('cors');
-// app.use(cors());
-// app.get('/hello', (req, res) => {
-//   res.send('Hello World!!!!!')
-// });
+const cors = require('cors');
+app.use(cors());
+app.get('/hello', (req, res) => {
+  res.send('Hello World!!!!!')
+});
 
-// app.get('/hello2', function (req, res) {
-//   // 接上連接池
-//   pool.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('error connecting: ' + err);
-//       return;
-//     } else {
-//       console.log("Connected!");
-//     }
-//   });
-// });
+app.get('/hello2', function (req, res) {
+  connection.connect(function(err) {
+    if (err) {
+      console.error('Error connecting to MariaDB: ' + err.stack);
+      return; 
+    }
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+  });
+});
 
 // app.get('/hello3', function (req, res) {
 //   // 接上連接池
