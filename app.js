@@ -13,6 +13,7 @@ connection.connect(function(err) {
   }
   console.log('Connected to MariaDB as ID ' + connection.threadId);
 });
+connection.end();
 
 
 // pool.getConnection((err, connection) => {
