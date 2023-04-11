@@ -1,5 +1,3 @@
-const cors = require('cors');
-app.use(cors());
 const mysql = require('mysql');
 const pool = mysql.createPool({
   host: '127.0.0.1',
@@ -43,7 +41,8 @@ connection.query('SELECT * FROM name', (err, results, fields) => {
 // 引入 express 並使用
 const express = require('express');
 const app = express();
-
+const cors = require('cors');
+app.use(cors());
 app.get('/hello', (req, res) => {
   res.send('Hello World!!!!!')
 });
