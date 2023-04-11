@@ -1,5 +1,5 @@
-const mariadb = require('mariadb');
-const pool = mariadb.createPool({
+const mariadb = require('mysql2');
+const pool = mariadb.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
