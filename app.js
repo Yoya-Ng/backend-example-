@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const pool = mysql.createPool({
-  host: '127.0.0.1',
+  host: 'localhost',
   user: 'root',
   password: 'adminroot',
   database: 'test'
@@ -16,7 +16,7 @@ pool.getConnection((err, connection) => {
 });
 
 const connection = mysql.createConnection({
-  host: '127.0.0.1',
+  host: 'localhost',
   user: 'root',
   password: 'adminroot',
   database: 'test'
