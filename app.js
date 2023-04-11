@@ -1,9 +1,10 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const pool = mysql.createPool({
-  host: 'localhost',
+  host: 'localhost:3306',
   user: 'root',
   password: 'adminroot',
-  database: 'test'
+  database: 'test',
+  port: '3306'
 });
 
 pool.getConnection((err, connection) => {
@@ -16,24 +17,34 @@ pool.getConnection((err, connection) => {
 });
 
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: 'http://localhost:3306',
   user: 'root',
   password: 'adminroot',
   database: 'test',
+  port: '3306',
   socketPath: '/run/mysqld/mysqld.sock'
 });
+function handleerror() {
 
-connection.connect(function (err) {
-  if (err) {
-    console.error('error connecting: ' + err);
-  } else {
-    console.log("Connected!");
-  }
-});
+  connection.connect(function (err) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      setTimeout(handleerror, 2000);
+    } else {
+      console.log("Connected!");
+    }
+  });
 
+  connection.on('error', function (err) {
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleerror();
+    }
+  })
+}
+handleerror();
 connection.query('SELECT * FROM name', (err, results, fields) => {
   if (err) {
-    console.log("Connected!" , err);
+    console.log("Connected!", err);
   }
   console.log("Connected!", results);
 });
