@@ -6,20 +6,14 @@ const pool = mariadb.createPool({
   database: 'test'
 });
 
-async function asyncFunction() {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    const rows = await conn.query('SELECT * FROM yourtable');
-    console.log(rows);
-  } catch (err) {
-    console.error('error connecting: ' + err);
-  } finally {
-    if (conn) return conn.end();
+connection.connect(function(err) {
+  if (err) {
+    console.error('Error connecting to MariaDB: ' + err.stack);
+    return;
   }
-}
+  console.log('Connected to MariaDB as ID ' + connection.threadId);
+});
 
-asyncFunction();
 
 // pool.getConnection((err, connection) => {
 //   if (err) {
