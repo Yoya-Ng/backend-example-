@@ -19,7 +19,8 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
-  database: 'test'
+  database: 'test',
+  socketPath: '/run/mysqld/mysqld.sock'
 });
 
 connection.connect(function (err) {
