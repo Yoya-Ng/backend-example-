@@ -1,6 +1,8 @@
+const cors = require('cors');
+app.use(cors());
 const mysql = require('mysql');
 const pool = mysql.createPool({
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
   password: 'adminroot',
   database: 'test'
@@ -16,7 +18,7 @@ pool.getConnection((err, connection) => {
 });
 
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
   password: 'adminroot',
   database: 'test'
@@ -101,12 +103,9 @@ app.listen(port, () => {
 });
 
 
-// const express = require('express')
-// const app = express()
-// const port = 80
+
 // const mysql = require('mysql');
-// const cors = require('cors');
-// app.use(cors());
+
 
 
 // const connection = mysql.createConnection({
