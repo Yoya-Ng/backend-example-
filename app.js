@@ -79,6 +79,7 @@ app.get('/hello2', function (req, res) {
       }
       res.json(results);
     });
+    connection.release(); // 釋放連接
   });
 
 });
