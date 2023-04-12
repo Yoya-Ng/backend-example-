@@ -71,13 +71,30 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/hello2', function (req, res) {
-  pool.connect(function (err) {
+  pool.getConnection((err, connection) => {
     if (err) {
       console.error('Error connecting to MariaDB: ' + err.stack);
       return;
     }
     console.log('Connected to MariaDB as ID ' + connection.threadId);
+  
+    connection.release(); // 釋放連接
+    pool.end(); // 關閉連接池
   });
+  
+});
+
+app.get('/hello3', function (req, res) {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('Error connecting to MariaDB: ' + err.stack);
+      return;
+    }
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+  
+    connection.release(); // 釋放連接
+  });
+  
 });
 
 
