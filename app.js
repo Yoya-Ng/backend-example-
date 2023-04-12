@@ -2,7 +2,7 @@ const mariadb = require('mysql2');
 const pool = mariadb.createPool({
   host: '172.17.0.2',
   user: 'root',
-  password: 'adminroot',
+  password: '123',
   database: 'test'
 });
 
@@ -71,7 +71,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/hello2', function (req, res) {
-  connection.connect(function (err) {
+  pool.connect(function (err) {
     if (err) {
       console.error('Error connecting to MariaDB: ' + err.stack);
       return;
@@ -90,17 +90,18 @@ app.get('/hello3', function (req, res) {
     });
 });
 
-// app.get('/hello4', function (req, res) {
-//   // 接上連接池
-//   pool3.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('error connecting: ' + err);
-//       return;
-//     } else {
-//       console.log("Connected!");
-//     }
-//   });
-// });
+app.get('/hello4', function (req, res) {
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    connection.query('SELECT * FROM name ')
+      .then(([rows, fields]) => {
+        console.log(rows[0]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+});
 
 // app.get('/hello5', function (req, res) {
 //   // 接上連接池
