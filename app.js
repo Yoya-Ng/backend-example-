@@ -14,7 +14,7 @@ pool.getConnection((err, connection) => {
   console.log('Connected to MariaDB as ID ' + connection.threadId);
 
   connection.release(); // 釋放連接
-  pool.end(); // 關閉連接池
+  // pool.end(); // 關閉連接池
 });
 
 
