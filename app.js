@@ -93,17 +93,14 @@ app.get('/hello2', function (req, res) {
   });
 });
 
-// app.get('/hello3', function (req, res) {
-//   // 接上連接池
-//   pool2.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('error connecting: ' + err);
-//       return;
-//     } else {
-//       console.log("Connected!");
-//     }
-//   });
-// });
+app.get('/hello3', function (req, res) {
+  connection.query('SELECT * FROM name', (err, results, fields) => {
+  if (err) {
+    console.log("Connected!", err);
+  }
+  console.log("Connected!", results);
+});
+});
 
 // app.get('/hello4', function (req, res) {
 //   // 接上連接池
