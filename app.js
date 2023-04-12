@@ -80,26 +80,18 @@ app.get('/hello2', function (req, res) {
   });
 });
 
-app.get('/hello3', function (req, res) {
-  pool.query('SELECT * FROM name ')
-    .then(([rows, fields]) => {
-      console.log(rows[0]);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-});
 
 app.get('/hello4', function (req, res) {
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('SELECT * FROM name ')
-      .then(([rows, fields]) => {
-        console.log(rows[0]);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    connection.query('SELECT * FROM name', (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+  
+      console.log(results[0]);
+    });
   });
 });
 
