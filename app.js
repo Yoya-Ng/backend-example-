@@ -71,58 +71,17 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/hello2', function (req, res) {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error('Error connecting to MariaDB: ' + err.stack);
-      return;
-    }
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
-  
-    connection.release(); // 釋放連接
-    pool.end(); // 關閉連接池
-  });
-  
-});
-
-app.get('/hello3', function (req, res) {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error('Error connecting to MariaDB: ' + err.stack);
-      return;
-    }
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
-  
-    connection.release(); // 釋放連接
-  });
-  
-});
-
-
-app.get('/hello4', function (req, res) {
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('SELECT * FROM name', (error, results, fields) => {
       if (error) {
-        console.error(error);
-        return;
+        res.send("NONO" + error);
       }
-  
-      console.log(results[0]);
+      res.json(results);
     });
   });
-});
 
-// app.get('/hello5', function (req, res) {
-//   // 接上連接池
-//   pool4.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('error connecting: ' + err);
-//       return;
-//     } else {
-//       console.log("Connected!");
-//     }
-//   });
-// });
+});
 
 // 監聽本地端 3000 port
 const port = 80;
