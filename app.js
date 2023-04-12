@@ -2,7 +2,7 @@ const mariadb = require('mysql2');
 const pool = mariadb.createPool({
   host: '172.17.0.2',
   user: 'root',
-  password: 'adminroot',
+  password: '123',
   database: 'test'
 });
 
@@ -12,8 +12,10 @@ pool.getConnection((err, connection) => {
     return;
   }
   console.log('Connected to MariaDB as ID ' + connection.threadId);
+
+  connection.release(); // 釋放連接
+  pool.end(); // 關閉連接池
 });
-pool.end();
 
 
 // pool.getConnection((err, connection) => {
