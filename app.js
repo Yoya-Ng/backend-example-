@@ -6,7 +6,7 @@ const pool = mariadb.createPool({
   database: 'test'
 });
 
-pool.connect(function (err) {
+pool.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to MariaDB: ' + err.stack);
     return;
