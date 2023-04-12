@@ -1,35 +1,20 @@
 const mariadb = require('mysql2');
-const connection = mariadb.createConnection({
+const pool = mariadb.createPool({
   host: '172.17.0.2',
   user: 'root',
   password: 'adminroot',
   database: 'test'
 });
 
-connection.connect(function(err) {
+pool.connect(function (err) {
   if (err) {
     console.error('Error connecting to MariaDB: ' + err.stack);
-    return; 
+    return;
   }
   console.log('Connected to MariaDB as ID ' + connection.threadId);
 });
-connection.end();
+pool.end();
 
-const connection2 = mariadb.createConnection({
-  host: 'mariadb',
-  user: 'root',
-  password: 'adminroot',
-  database: 'test'
-});
-
-connection2.connect(function(err) {
-  if (err) {
-    console.error('Error connecting to MariaDB: ' + err.stack);
-    return; 
-  }
-  console.log('Connected to MariaDB as ID ' + connection.threadId);
-});
-connection2.end();
 
 // pool.getConnection((err, connection) => {
 //   if (err) {
@@ -84,22 +69,23 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/hello2', function (req, res) {
-  connection.connect(function(err) {
+  connection.connect(function (err) {
     if (err) {
       console.error('Error connecting to MariaDB: ' + err.stack);
-      return; 
+      return;
     }
     console.log('Connected to MariaDB as ID ' + connection.threadId);
   });
 });
 
 app.get('/hello3', function (req, res) {
-  connection.query('SELECT * FROM name', (err, results, fields) => {
-  if (err) {
-    console.log("Connected!", err);
-  }
-  console.log("Connected!", results);
-});
+  pool.query('SELECT * FROM name ')
+    .then(([rows, fields]) => {
+      console.log(rows[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 });
 
 // app.get('/hello4', function (req, res) {
