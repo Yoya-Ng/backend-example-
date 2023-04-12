@@ -15,6 +15,21 @@ connection.connect(function(err) {
 });
 connection.end();
 
+const connection2 = mariadb.createConnection({
+  host: 'mariadb',
+  user: 'root',
+  password: 'adminroot',
+  database: 'test'
+});
+
+connection2.connect(function(err) {
+  if (err) {
+    console.error('Error connecting to MariaDB: ' + err.stack);
+    return; 
+  }
+  console.log('Connected to MariaDB as ID ' + connection.threadId);
+});
+connection2.end();
 
 // pool.getConnection((err, connection) => {
 //   if (err) {
