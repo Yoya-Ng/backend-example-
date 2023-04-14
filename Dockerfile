@@ -1,6 +1,7 @@
 # Set the base image to node:12-alpine
 FROM node:18-alpine
-RUN apt-get update && apt-get install -y mysql-client
+RUN sudo apt-get update
+RUN sudo apt-get install -y mysql-client
 
 # Specify where our app will live in the container
 WORKDIR /app
