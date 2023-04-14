@@ -8,7 +8,7 @@ services:
     depends_on:
       - mariadb
     networks:
-      - backend_network
+      - backend
   mariadb:
     container_name: mariadb
     image: mariadb
@@ -17,6 +17,6 @@ services:
     volumes:
       - /var/lib/mysql:/var/lib/mysql
     networks:
-      - backend_network
+      - backend
 networks:
-  backend_network:
+  backend:
