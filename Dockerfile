@@ -1,7 +1,5 @@
 # Set the base image to node:12-alpine
 FROM node:18-alpine
-RUN sudo apt-get update
-RUN sudo apt-get install -y mysql-client
 
 # Specify where our app will live in the container
 WORKDIR /app
@@ -12,6 +10,8 @@ COPY package*.json ./
 COPY . .
 
 RUN yarn install
+RUN apt-get update
+RUN apt-get install -y mysql-client
 
 EXPOSE 80
 # Start App
