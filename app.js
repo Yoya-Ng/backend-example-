@@ -1,6 +1,6 @@
 const mariadb = require('mysql2');
 const pool = mariadb.createPool({
-  host: '172.17.0.2',
+  host: 'mariadb',
   user: 'root',
   password: 'adminroot',
   database: 'test'
