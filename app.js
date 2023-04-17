@@ -1,7 +1,7 @@
 const mariadb = require('mysql2');
 const pool = mariadb.createPool({
-  socketPath: '/run/mysqld/mysqld.sock',
-  host: 'localhost',
+  // socketPath: '/run/mysqld/mysqld.sock',
+  host: 'mariadb',
   user: 'root',
   password: 'adminroot',
   database: 'test'
