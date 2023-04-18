@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const pool = mysql.createPool({
-  socketPath: '/run/mysqld/mysqld.sock',
+  socketPath: '/run/mysqld/mysqld.sock', // 有關連線登入的位置
   host: 'localhost',
   user: 'root',
   password: 'adminroot',
@@ -40,12 +40,14 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 app.get('/hello', (req, res) => {
+  console.log('hello' );
   res.send('Hello World!!!!!')
 });
 
 app.get('/hello2', function (req, res) {
   // 接上連接池
   pool.getConnection((err, connection) => {
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
     connection.query('SELECT * FROM name', (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
