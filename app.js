@@ -1,6 +1,5 @@
 const mariadb = require('mariadb');
 const pool = mariadb.createPool({
-  // socketPath: '/run/mysqld/mysqld.sock',
   host: 'mariadb',
   user: 'root',
   password: 'adminroot',
@@ -14,7 +13,7 @@ pool.getConnection((err, connection) => {
   }
   console.log('Connected to MariaDB as ID ' + connection.threadId);
 
-  connection.release(); // 釋放連接
+  // connection.release(); // 釋放連接
   // pool.end(); // 關閉連接池
 });
 

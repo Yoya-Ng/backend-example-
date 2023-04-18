@@ -7,8 +7,6 @@ services:
       - "80:80"
     depends_on:
       - mariadb
-    links:
-      - mariadb
     networks:
       - backend
   mariadb:
