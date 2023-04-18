@@ -1,81 +1,38 @@
-// const mariadb = require('mariadb');
-// const pool = mariadb.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'adminroot',
-//   database: 'test'
-// });
-
-// pool.getConnection((err, connection) => {
-//   if (err) {
-//     console.error('Error connecting to MariaDB: ' + err.stack);
-//     return;
-//   }
-//   console.log('Connected to MariaDB as ID ' + connection.threadId);
-
-//   // connection.release(); // 釋放連接
-//   // pool.end(); // 關閉連接池
-// });
-
-const mysql = require('mysql');
-var mysqlConnection = mysql.createConnection({
+const mariadb = require('mariadb');
+const pool = mariadb.createPool({
   socketPath: '/run/mysqld/mysqld.sock',
   host: 'localhost',
-  user: 'root',   
+  user: 'root',
   password: 'adminroot',
   database: 'test'
 });
 
-mysqlConnection.connect((err) => {
-  if (!err)
-      console.log('DB connection succeded.');
-  else
-      console.log('DB connection failed \n Error : ' + err);
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to MariaDB: ' + err.stack);
+    return;
+  }
+  console.log('Connected to MariaDB as ID ' + connection.threadId);
+
+  // connection.release(); // 釋放連接
+  // pool.end(); // 關閉連接池
 });
 
-
-// pool.getConnection((err, connection) => {
-//   if (err) {
-//     console.error('error connecting: ' + err);
-//     return;
-//   } else {
-//     console.log("pool Connected!");
-//   }
-// });
-
-// const connection = mysql.createConnection({
-//   host: 'http://localhost:3306',
-//   user: 'root',
+// const mysql = require('mysql');
+// var mysqlConnection = mysql.createConnection({
+//   socketPath: '/run/mysqld/mysqld.sock',
+//   host: 'localhost',
+//   user: 'root',   
 //   password: 'adminroot',
-//   database: 'test',
-//   port: '3306',
-//   socketPath: '/run/mysqld/mysqld.sock'
-// });
-// function handleerror() {
-
-//   connection.connect(function (err) {
-//     if (err) {
-//       console.error('error connecting: ' + err);
-//       setTimeout(handleerror, 2000);
-//     } else {
-//       console.log("Connected!");
-//     }
-//   });
-
-//   connection.on('error', function (err) {
-//     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-//       handleerror();
-//     }
-//   })
-// }
-// handleerror();
-// connection.query('SELECT * FROM name', (err, results, fields) => {
-//   if (err) {
-//     console.log("Connected!", err);
-//   }
-//   console.log("Connected!", results);
+//   database: 'test'
 // });
 
+// mysqlConnection.connect((err) => {
+//   if (!err)
+//       console.log('DB connection succeded.');
+//   else
+//       console.log('DB connection failed \n Error : ' + err);
+// });
 
 // // 引入 express 並使用
 const express = require('express');
