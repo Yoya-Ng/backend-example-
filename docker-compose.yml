@@ -7,6 +7,8 @@ services:
       - "80:80"
     depends_on:
       - mariadb
+    volumes:
+      - /run/mysqld:/run/mysqld
     networks:
       - backend
   mariadb:
