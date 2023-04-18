@@ -1,36 +1,36 @@
-const mariadb = require('mariadb');
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'adminroot',
-  database: 'test'
-});
-
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to MariaDB: ' + err.stack);
-    return;
-  }
-  console.log('Connected to MariaDB as ID ' + connection.threadId);
-
-  // connection.release(); // 釋放連接
-  // pool.end(); // 關閉連接池
-});
-
-// const mysql = require('mysql');
-// var mysqlConnection = mysql.createConnection({
-//   host: 'localhost',    
-//   user: 'root',   
+// const mariadb = require('mariadb');
+// const pool = mariadb.createPool({
+//   host: 'localhost',
+//   user: 'root',
 //   password: 'adminroot',
 //   database: 'test'
 // });
 
-// mysqlConnection.connect((err) => {
-//   if (!err)
-//       console.log('DB connection succeded.');
-//   else
-//       console.log('DB connection failed \n Error : ' + err);
+// pool.getConnection((err, connection) => {
+//   if (err) {
+//     console.error('Error connecting to MariaDB: ' + err.stack);
+//     return;
+//   }
+//   console.log('Connected to MariaDB as ID ' + connection.threadId);
+
+//   // connection.release(); // 釋放連接
+//   // pool.end(); // 關閉連接池
 // });
+
+const mysql = require('mysql');
+var mysqlConnection = mysql.createConnection({
+  host: 'localhost',    
+  user: 'root',   
+  password: 'adminroot',
+  database: 'test'
+});
+
+mysqlConnection.connect((err) => {
+  if (!err)
+      console.log('DB connection succeded.');
+  else
+      console.log('DB connection failed \n Error : ' + err);
+});
 
 
 // pool.getConnection((err, connection) => {
