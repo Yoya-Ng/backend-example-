@@ -19,7 +19,8 @@
 
 const mysql = require('mysql');
 var mysqlConnection = mysql.createConnection({
-  host: '127.0.0.1',
+  socketPath: '/run/mysqld/mysqld.sock',
+  host: 'localhost',
   user: 'root',   
   password: 'adminroot',
   database: 'test'
