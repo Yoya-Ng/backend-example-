@@ -1,5 +1,5 @@
-const mariadb = require('mariadb');
-const pool = mariadb.createPool({
+const mysql = require('mysql');
+const pool = mysql.createPool({
   socketPath: '/run/mysqld/mysqld.sock',
   host: 'localhost',
   user: 'root',
