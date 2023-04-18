@@ -1,6 +1,6 @@
 build:
 	git pull
-	docker-compose up
+	sudo docker-compose up
 
 buildlink:
 	git pull
