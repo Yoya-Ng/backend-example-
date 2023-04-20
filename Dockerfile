@@ -12,6 +12,6 @@ COPY . .
 
 RUN yarn install
 
-EXPOSE 80
+# EXPOSE 80
 # Start App
 CMD ["npm", "run", "start"]
