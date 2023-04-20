@@ -1,3 +1,7 @@
+run:
+	git pull
+	sudo docker-compose up -d
+
 build:
 	git pull
 	sudo docker build -t backend-example . 
