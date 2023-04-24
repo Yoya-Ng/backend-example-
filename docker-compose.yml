@@ -10,8 +10,8 @@ services:
   backend-example:
     container_name: backend-example
     image: backend-example
-#     ports:
-#       - "80:80"
+    ports:
+      - "80:80"
     # depends_on:
     #   - mariadb
     volumes:
