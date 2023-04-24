@@ -7,31 +7,15 @@ const pool = mysql.createPool({
   database: 'test'
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to MariaDB: ' + err.stack);
-    return;
-  }
-  console.log('Connected to MariaDB as ID ' + connection.threadId);
+// pool.getConnection((err, connection) => {
+//   if (err) {
+//     console.error('Error connecting to MariaDB: ' + err.stack);
+//     return;
+//   }
+//   console.log('Connected to MariaDB as ID ' + connection.threadId);
 
-  connection.release(); // 釋放連接
-  // pool.end(); // 關閉連接池
-});
-
-// const mysql = require('mysql');
-// var mysqlConnection = mysql.createConnection({
-//   socketPath: '/run/mysqld/mysqld.sock',
-//   host: 'localhost',
-//   user: 'root',   
-//   password: 'adminroot',
-//   database: 'test'
-// });
-
-// mysqlConnection.connect((err) => {
-//   if (!err)
-//       console.log('DB connection succeded.');
-//   else
-//       console.log('DB connection failed \n Error : ' + err);
+//   connection.release(); // 釋放連接
+//   // pool.end(); // 關閉連接池
 // });
 
 // // 引入 express 並使用
@@ -40,7 +24,7 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 app.get('/hello', (req, res) => {
-  console.log('hello' );
+  console.log('hello');
   res.send('Hello World!!!!!')
 });
 
@@ -54,6 +38,21 @@ app.get('/hello2', function (req, res) {
         res.send("NONO" + error);
       }
       console.log(results);
+      res.json(results);
+    });
+    connection.release(); // 釋放連接
+  });
+
+});
+
+app.get('/users', function (req, res) {
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+    connection.query('SELECT * FROM users', (error, results, fields) => {
+      if (error) {
+        res.send("NONO" + error);
+      }
       res.json(results);
     });
     connection.release(); // 釋放連接
