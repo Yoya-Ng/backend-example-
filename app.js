@@ -71,7 +71,7 @@ app.put('/users', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   console.log(reqjson);
   console.log(reqjson.name);
-  let values = [reqjson.id,reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
+  let values = [[reqjson.id,reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber]];
 
   // 接上連接池
   pool.getConnection((err, connection) => {
