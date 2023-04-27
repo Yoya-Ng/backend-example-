@@ -20,12 +20,14 @@ const pool = mysql.createPool({
 
 // // 引入 express 並使用
 const express = require('express');
+const bodyParser = require('body-parser')
 const app = express();
 var multer = require('multer')
 var upload = multer()
 const cors = require('cors');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
-
 
 app.get('/hello', (req, res) => {
   console.log('hello');
