@@ -22,11 +22,11 @@ const pool = mysql.createPool({
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
-var multer = require('multer')
-var upload = multer()
 const cors = require('cors');
+//node.js用來解析body的資料
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+//解決跨網域問題
 app.use(cors());
 
 app.get('/hello', (req, res) => {
@@ -67,38 +67,20 @@ app.get('/users', function (req, res) {
 });
 
 app.put('/users', (req, res) => {
-  console.log(req.query);
-  console.log(req.body);
-  res.json(req.query);
-  // 接上連接池
-  // pool.getConnection((err, connection) => {
-  //   console.log('Connected to MariaDB as ID ' + connection.threadId);
-  //   connection.query('SELECT * FROM users', (error, results, fields) => {
-  //     if (error) {
-  //       res.send("NONO" + error);
-  //     }
-  //     res.json(results);
-  //   });
-  //   connection.release(); // 釋放連接
-  // });
+  const reqjson = JSON.parse(req.body);
+  let values = [reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
 
-});
-
-app.post('/users', upload.array(), (req, res) => {
-  console.log(req.body);
-  console.log(res.body);
-  res.json(req.body);
   // 接上連接池
-  // pool.getConnection((err, connection) => {
-  //   console.log('Connected to MariaDB as ID ' + connection.threadId);
-  //   connection.query('SELECT * FROM users', (error, results, fields) => {
-  //     if (error) {
-  //       res.send("NONO" + error);
-  //     }
-  //     res.json(results);
-  //   });
-  //   connection.release(); // 釋放連接
-  // });
+  pool.getConnection((err, connection) => {
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+    connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?',[values], (error, results, fields) => {
+      if (error) {
+        res.send("NONO" + error);
+      }
+      res.json(results);
+    });
+    connection.release(); // 釋放連接
+  });
 
 });
 
