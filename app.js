@@ -68,15 +68,15 @@ app.get('/users', function (req, res) {
 
 app.put('/users', (req, res) => {
   console.log(req.body);
-  console.log(typeof req.body);
   const reqjson = JSON.parse(JSON.stringify(req.body));
   console.log(reqjson);
-  let values = [reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
+  console.log(reqjson.name);
+  let values = [reqjson.id,reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
 
   // 接上連接池
   pool.getConnection((err, connection) => {
     console.log('Connected to MariaDB as ID ' + connection.threadId);
-    connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?',[values], (error, results, fields) => {
+    connection.query('INSERT INTO users (id,name,isVerified,role,classNumber) VALUES ?',[values], (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
       }
