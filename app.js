@@ -61,7 +61,8 @@ app.get('/users', function (req, res) {
 });
 
 app.put('/users', function (req, res) {
-  
+  console.log(req);
+  console.log(req.query);
         res.json(req.query);
   // 接上連接池
   // pool.getConnection((err, connection) => {
@@ -78,7 +79,9 @@ app.put('/users', function (req, res) {
 });
 
 app.post('/users', function (req, res) {
-  
+    console.log(req);
+    console.log(req.body);
+
   res.json(req.body);
 // 接上連接池
 // pool.getConnection((err, connection) => {
