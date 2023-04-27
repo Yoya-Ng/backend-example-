@@ -79,8 +79,8 @@ app.put('/users', function (req, res) {
 });
 
 app.post('/users', function (req, res) {
-  console.log(JSON.parse(req.body));
-  console.log(JSON.parse(res.body));
+  console.log(req.body);
+  console.log(res.body);
   res.json(req.body);
 // 接上連接池
 // pool.getConnection((err, connection) => {
