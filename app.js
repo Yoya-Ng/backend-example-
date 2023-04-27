@@ -60,6 +60,23 @@ app.get('/users', function (req, res) {
 
 });
 
+app.put('/users', function (req, res) {
+  
+        res.json(req.query);
+  // 接上連接池
+  // pool.getConnection((err, connection) => {
+  //   console.log('Connected to MariaDB as ID ' + connection.threadId);
+  //   connection.query('SELECT * FROM users', (error, results, fields) => {
+  //     if (error) {
+  //       res.send("NONO" + error);
+  //     }
+  //     res.json(results);
+  //   });
+  //   connection.release(); // 釋放連接
+  // });
+
+});
+
 // 監聽本地端 3000 port
 const port = 80;
 app.listen(port, () => {
