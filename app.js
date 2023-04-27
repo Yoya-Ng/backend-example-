@@ -21,8 +21,12 @@ const pool = mysql.createPool({
 // // 引入 express 並使用
 const express = require('express');
 const app = express();
+var multer = require('multer')
+var upload = multer()
 const cors = require('cors');
 app.use(cors());
+
+
 app.get('/hello', (req, res) => {
   console.log('hello');
   res.send('Hello World!!!!!')
@@ -60,10 +64,10 @@ app.get('/users', function (req, res) {
 
 });
 
-app.put('/users', function (req, res) {
-  console.log(req);
+app.put('/users', (req, res) => {
   console.log(req.query);
-        res.json(req.query);
+  console.log(req.body);
+  res.json(req.query);
   // 接上連接池
   // pool.getConnection((err, connection) => {
   //   console.log('Connected to MariaDB as ID ' + connection.threadId);
@@ -78,21 +82,21 @@ app.put('/users', function (req, res) {
 
 });
 
-app.post('/users', function (req, res) {
+app.post('/users', upload.array(), (req, res) => {
   console.log(req.body);
   console.log(res.body);
   res.json(req.body);
-// 接上連接池
-// pool.getConnection((err, connection) => {
-//   console.log('Connected to MariaDB as ID ' + connection.threadId);
-//   connection.query('SELECT * FROM users', (error, results, fields) => {
-//     if (error) {
-//       res.send("NONO" + error);
-//     }
-//     res.json(results);
-//   });
-//   connection.release(); // 釋放連接
-// });
+  // 接上連接池
+  // pool.getConnection((err, connection) => {
+  //   console.log('Connected to MariaDB as ID ' + connection.threadId);
+  //   connection.query('SELECT * FROM users', (error, results, fields) => {
+  //     if (error) {
+  //       res.send("NONO" + error);
+  //     }
+  //     res.json(results);
+  //   });
+  //   connection.release(); // 釋放連接
+  // });
 
 });
 
