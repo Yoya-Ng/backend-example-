@@ -54,7 +54,6 @@ app.get('/hello2', function (req, res) {
 app.get('/users', function (req, res) {
   // 接上連接池
   pool.getConnection((err, connection) => {
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
     connection.query('SELECT * FROM users', (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
@@ -68,15 +67,19 @@ app.get('/users', function (req, res) {
 
 app.put('/users', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  let values = [[reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber]];
+  let values = [[reqjson.name, reqjson.isVerified, reqjson.role, reqjson.classNumber]];
   // 接上連接池
   pool.getConnection((err, connection) => {
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
-    connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?',[values], (error, results, fields) => {
+    connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?', [values], (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
       }
-      res.json(results);
+      connection.query('SELECT * FROM users', (error, results, fields) => {
+        if (error) {
+          res.send("NONO" + error);
+        }
+        res.json(results);
+      });
     });
     connection.release(); // 釋放連接
   });
@@ -86,12 +89,16 @@ app.post('/users', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   // 接上連接池
   pool.getConnection((err, connection) => {
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
-    connection.query('UPDATE users SET ? where name = ?',[reqjson,reqjson.name], (error, results, fields) => {
+    connection.query('UPDATE users SET ? where name = ?', [reqjson, reqjson.name], (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
       }
-      res.json(results);
+      connection.query('SELECT * FROM users', (error, results, fields) => {
+        if (error) {
+          res.send("NONO" + error);
+        }
+        res.json(results);
+      });
     });
     connection.release(); // 釋放連接
   });
@@ -101,12 +108,16 @@ app.delete('/users', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   // 接上連接池
   pool.getConnection((err, connection) => {
-    console.log('Connected to MariaDB as ID ' + connection.threadId);
-    connection.query('DELECT FROM users where name = ?',[reqjson.name], (error, results, fields) => {
+    connection.query('DELECT FROM users where name = ?', [reqjson.name], (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
       }
-      res.json(results);
+      connection.query('SELECT * FROM users', (error, results, fields) => {
+        if (error) {
+          res.send("NONO" + error);
+        }
+        res.json(results);
+      });
     });
     connection.release(); // 釋放連接
   });
