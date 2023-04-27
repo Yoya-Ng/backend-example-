@@ -70,6 +70,7 @@ app.put('/users', (req, res) => {
   console.log(req.body);
   console.log(typeof req.body);
   const reqjson = JSON.parse(JSON.stringify(req.body));
+  console.log(reqjson);
   let values = [reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
 
   // 接上連接池
