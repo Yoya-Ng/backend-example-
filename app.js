@@ -67,6 +67,8 @@ app.get('/users', function (req, res) {
 });
 
 app.put('/users', (req, res) => {
+  console.log(req.body);
+
   const reqjson = JSON.parse(req.body);
   let values = [reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber];
 
