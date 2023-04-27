@@ -67,12 +67,8 @@ app.get('/users', function (req, res) {
 });
 
 app.put('/users', (req, res) => {
-  console.log(req.body);
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  console.log(reqjson);
-  console.log(reqjson.name);
   let values = [[reqjson.name,reqjson.isVerified,reqjson.role,reqjson.classNumber]];
-
   // 接上連接池
   pool.getConnection((err, connection) => {
     console.log('Connected to MariaDB as ID ' + connection.threadId);
@@ -84,9 +80,37 @@ app.put('/users', (req, res) => {
     });
     connection.release(); // 釋放連接
   });
-
 });
 
+app.post('/users', (req, res) => {
+  const reqjson = JSON.parse(JSON.stringify(req.body));
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+    connection.query('UPDATE users SET ? where name = ?',[reqjson,reqjson.nam], (error, results, fields) => {
+      if (error) {
+        res.send("NONO" + error);
+      }
+      res.json(results);
+    });
+    connection.release(); // 釋放連接
+  });
+});
+
+app.delete('/users', (req, res) => {
+  const reqjson = JSON.parse(JSON.stringify(req.body));
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    console.log('Connected to MariaDB as ID ' + connection.threadId);
+    connection.query('DELECT FROM users VALUES ?',[reqjson.name], (error, results, fields) => {
+      if (error) {
+        res.send("NONO" + error);
+      }
+      res.json(results);
+    });
+    connection.release(); // 釋放連接
+  });
+});
 
 // 監聽本地端 3000 port
 const port = 80;
