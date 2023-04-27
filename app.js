@@ -87,7 +87,7 @@ app.post('/users', (req, res) => {
   // 接上連接池
   pool.getConnection((err, connection) => {
     console.log('Connected to MariaDB as ID ' + connection.threadId);
-    connection.query('UPDATE users SET ? where name = ?',[reqjson,reqjson.nam], (error, results, fields) => {
+    connection.query('UPDATE users SET ? where name = ?',[reqjson,reqjson.name], (error, results, fields) => {
       if (error) {
         res.send("NONO" + error);
       }
