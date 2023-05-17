@@ -108,7 +108,7 @@ app.post('/users', (req, res) => {
 
 app.delete('/users', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  console.log('users',reqjson);
+  console.log('users',reqjson.name);
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('DELECT FROM users where name = ?', [reqjson.name], (error, results, fields) => {
