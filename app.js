@@ -72,14 +72,15 @@ app.put('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?', [values], (error, results, fields) => {
       if (error) {
-        res.send("NONO" + error);
+        res.send("I錯誤" + error);
+      } else {
+        connection.query('SELECT * FROM users', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤" + error);
+          }
+          res.json(results);
+        });
       }
-      connection.query('SELECT * FROM users', (error, results, fields) => {
-        if (error) {
-          res.send("NONO" + error);
-        }
-        res.json(results);
-      });
     });
     connection.release(); // 釋放連接
   });
