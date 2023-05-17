@@ -92,14 +92,15 @@ app.post('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('UPDATE users SET ? where name = ?', [reqjson, reqjson.name], (error, results, fields) => {
       if (error) {
-        res.send("NONO" + error);
+        res.send("U錯誤" + error);
+      } else {
+        connection.query('SELECT * FROM users', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤" + error);
+          }
+          res.json(results);
+        });
       }
-      connection.query('SELECT * FROM users', (error, results, fields) => {
-        if (error) {
-          res.send("NONO" + error);
-        }
-        res.json(results);
-      });
     });
     connection.release(); // 釋放連接
   });
@@ -111,14 +112,15 @@ app.delete('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('DELECT FROM users where name = ?', [reqjson.name], (error, results, fields) => {
       if (error) {
-        res.send("NONO" + error);
+        res.send("D錯誤" + error);
+      } else {
+        connection.query('SELECT * FROM users', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤" + error);
+          }
+          res.json(results);
+        });
       }
-      connection.query('SELECT * FROM users', (error, results, fields) => {
-        if (error) {
-          res.send("NONO" + error);
-        }
-        res.json(results);
-      });
     });
     connection.release(); // 釋放連接
   });
