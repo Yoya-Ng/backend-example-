@@ -110,7 +110,7 @@ app.delete('/users/:name', (req, res) => {
   console.log('req.params',req.params);
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('DELETE FROM users where name = ?', [req.params], (error, results, fields) => {
+    connection.query('DELETE FROM users where name = ?', [req.params.name], (error, results, fields) => {
       if (error) {
         res.send("D錯誤" + error);
       } else {
