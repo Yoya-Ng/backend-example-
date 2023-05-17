@@ -111,7 +111,7 @@ app.delete('/users', (req, res) => {
   console.log('users',reqjson.name);
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('DELECT FROM users where name = ?', [reqjson.name], (error, results, fields) => {
+    connection.query('DELETE FROM users where name = ?', [reqjson.name], (error, results, fields) => {
       if (error) {
         res.send("D錯誤" + error);
       } else {
