@@ -148,7 +148,7 @@ app.put('/class', (req, res) => {
   let values = [[reqjson.name, reqjson.isVerified, reqjson.role, reqjson.classNumber]];
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('INSERT INTO class (name,isVerified,role,classNumber) VALUES ?', [values], (error, results, fields) => {
+    connection.query('INSERT INTO class (className,classTimeStart,classTimeEnd) VALUES ?', [values], (error, results, fields) => {
       if (error) {
         res.send("I錯誤class" + error);
       } else {
