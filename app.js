@@ -168,7 +168,7 @@ app.post('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('UPDATE class SET ? where name = ?', [reqjson, reqjson.name], (error, results, fields) => {
+    connection.query('UPDATE class SET ? where className = ?', [reqjson, reqjson.name], (error, results, fields) => {
       if (error) {
         res.send("U錯誤class" + error);
       } else {
