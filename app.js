@@ -184,7 +184,7 @@ app.post('/class', (req, res) => {
   });
 });
 
-app.delete('/class/:className', (req, res) => {
+app.delete('/class/:ID', (req, res) => {
   console.log('req.params', req.params.ID);
   // 接上連接池
   pool.getConnection((err, connection) => {
