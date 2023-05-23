@@ -145,10 +145,10 @@ app.get('/class', function (req, res) {
 
 app.put('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  let values = [[0, reqjson.className, reqjson.classTimeStart, reqjson.classTimeEnd]];
+  let values = [[reqjson.classDay, reqjson.className, reqjson.classStart, reqjson.classEnd]];
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('INSERT INTO class (id,className,classTimeStart,classTimeEnd) VALUES ?', [values], (error, results, fields) => {
+    connection.query('INSERT INTO class (classDay,className,classStart,classEnd) VALUES ?', [values], (error, results, fields) => {
       if (error) {
         res.send("I錯誤class" + error);
       } else {
@@ -168,7 +168,7 @@ app.post('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('UPDATE class SET ? where ID = ?', [reqjson, reqjson.ID], (error, results, fields) => {
+    connection.query('UPDATE class SET ? where classDay = ? and className = ?', [reqjson, reqjson.classDay, reqjson.className], (error, results, fields) => {
       if (error) {
         res.send("U錯誤class" + error);
       } else {
@@ -184,11 +184,15 @@ app.post('/class', (req, res) => {
   });
 });
 
-app.delete('/class/:ID', (req, res) => {
-  console.log('req.params', req.params.ID);
+app.delete('/class/:date', (req, res) => {
+  console.log('req.params.date', req.params.date);
+  const date = req.params.date.split('-');
+  console.log('req.params.date0', date[0]);
+  console.log('req.params.date1', date[1]);
+
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('DELETE FROM class where ID = ?', [req.params.ID], (error, results, fields) => {
+    connection.query('DELETE FROM class where classDay = ? and className = ?', [date[0], date[1]], (error, results, fields) => {
       if (error) {
         res.send("D錯誤class" + error);
       } else {
