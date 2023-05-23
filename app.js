@@ -168,7 +168,7 @@ app.post('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('UPDATE class SET ? where id = ?', [reqjson, reqjson.id], (error, results, fields) => {
+    connection.query('UPDATE class SET ? where ID = ?', [reqjson, reqjson.ID], (error, results, fields) => {
       if (error) {
         res.send("U錯誤class" + error);
       } else {
@@ -188,7 +188,7 @@ app.delete('/class/:className', (req, res) => {
   console.log('req.params', req.params.id);
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('DELETE FROM class where id = ?', [req.params.id], (error, results, fields) => {
+    connection.query('DELETE FROM class where ID = ?', [req.params.ID], (error, results, fields) => {
       if (error) {
         res.send("D錯誤class" + error);
       } else {
