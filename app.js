@@ -185,7 +185,7 @@ app.post('/class', (req, res) => {
 });
 
 app.delete('/class/:className', (req, res) => {
-  console.log('req.params', req.params.id);
+  console.log('req.params', req.params.ID);
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('DELETE FROM class where ID = ?', [req.params.ID], (error, results, fields) => {
