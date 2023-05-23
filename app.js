@@ -108,7 +108,7 @@ app.post('/users', (req, res) => {
 });
 
 app.delete('/users/:name', (req, res) => {
-  console.log('req.params',req.params.name);
+  console.log('req.params', req.params.name);
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('DELETE FROM users where name = ?', [req.params.name], (error, results, fields) => {
@@ -145,10 +145,10 @@ app.get('/class', function (req, res) {
 
 app.put('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  let values = [[reqjson.name, reqjson.isVerified, reqjson.role, reqjson.classNumber]];
+  let values = [[0, reqjson.className, reqjson.classTimeStart, reqjson.classTimeEnd]];
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('INSERT INTO class (className,classTimeStart,classTimeEnd) VALUES ?', [values], (error, results, fields) => {
+    connection.query('INSERT INTO class (id,className,classTimeStart,classTimeEnd) VALUES ?', [values], (error, results, fields) => {
       if (error) {
         res.send("I錯誤class" + error);
       } else {
@@ -185,7 +185,7 @@ app.post('/class', (req, res) => {
 });
 
 app.delete('/class/:className', (req, res) => {
-  console.log('req.params',req.params.className);
+  console.log('req.params', req.params.className);
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('DELETE FROM class where className = ?', [req.params.className], (error, results, fields) => {
