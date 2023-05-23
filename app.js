@@ -51,12 +51,13 @@ app.get('/hello2', function (req, res) {
 
 });
 
+//使用者
 app.get('/users', function (req, res) {
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('SELECT * FROM users', (error, results, fields) => {
       if (error) {
-        res.send("NONO" + error);
+        res.send("S錯誤user" + error);
       }
       res.json(results);
     });
@@ -72,11 +73,11 @@ app.put('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('INSERT INTO users (name,isVerified,role,classNumber) VALUES ?', [values], (error, results, fields) => {
       if (error) {
-        res.send("I錯誤" + error);
+        res.send("I錯誤user" + error);
       } else {
         connection.query('SELECT * FROM users', (error, results, fields) => {
           if (error) {
-            res.send("S錯誤" + error);
+            res.send("S錯誤user" + error);
           }
           res.json(results);
         });
@@ -92,11 +93,11 @@ app.post('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     connection.query('UPDATE users SET ? where name = ?', [reqjson, reqjson.name], (error, results, fields) => {
       if (error) {
-        res.send("U錯誤" + error);
+        res.send("U錯誤user" + error);
       } else {
         connection.query('SELECT * FROM users', (error, results, fields) => {
           if (error) {
-            res.send("S錯誤" + error);
+            res.send("S錯誤user" + error);
           }
           res.json(results);
         });
@@ -107,16 +108,93 @@ app.post('/users', (req, res) => {
 });
 
 app.delete('/users/:name', (req, res) => {
-  console.log('req.params',req.params);
+  console.log('req.params',req.params.name);
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('DELETE FROM users where name = ?', [req.params.name], (error, results, fields) => {
       if (error) {
-        res.send("D錯誤" + error);
+        res.send("D錯誤user" + error);
       } else {
         connection.query('SELECT * FROM users', (error, results, fields) => {
           if (error) {
-            res.send("S錯誤" + error);
+            res.send("S錯誤user" + error);
+          }
+          res.json(results);
+        });
+      }
+    });
+    connection.release(); // 釋放連接
+  });
+});
+
+//課程
+
+app.get('/class', function (req, res) {
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    connection.query('SELECT * FROM class', (error, results, fields) => {
+      if (error) {
+        res.send("S錯誤class" + error);
+      }
+      res.json(results);
+    });
+    connection.release(); // 釋放連接
+  });
+
+});
+
+app.put('/class', (req, res) => {
+  const reqjson = JSON.parse(JSON.stringify(req.body));
+  let values = [[reqjson.name, reqjson.isVerified, reqjson.role, reqjson.classNumber]];
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    connection.query('INSERT INTO class (name,isVerified,role,classNumber) VALUES ?', [values], (error, results, fields) => {
+      if (error) {
+        res.send("I錯誤class" + error);
+      } else {
+        connection.query('SELECT * FROM class', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤class" + error);
+          }
+          res.json(results);
+        });
+      }
+    });
+    connection.release(); // 釋放連接
+  });
+});
+
+app.post('/class', (req, res) => {
+  const reqjson = JSON.parse(JSON.stringify(req.body));
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    connection.query('UPDATE class SET ? where name = ?', [reqjson, reqjson.name], (error, results, fields) => {
+      if (error) {
+        res.send("U錯誤class" + error);
+      } else {
+        connection.query('SELECT * FROM class', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤class" + error);
+          }
+          res.json(results);
+        });
+      }
+    });
+    connection.release(); // 釋放連接
+  });
+});
+
+app.delete('/class/:className', (req, res) => {
+  console.log('req.params',req.params.className);
+  // 接上連接池
+  pool.getConnection((err, connection) => {
+    connection.query('DELETE FROM class where className = ?', [req.params.className], (error, results, fields) => {
+      if (error) {
+        res.send("D錯誤class" + error);
+      } else {
+        connection.query('SELECT * FROM class', (error, results, fields) => {
+          if (error) {
+            res.send("S錯誤class" + error);
           }
           res.json(results);
         });
