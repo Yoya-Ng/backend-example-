@@ -166,9 +166,10 @@ app.put('/class', (req, res) => {
 
 app.post('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
+  let values = [[reqjson.classDay, reqjson.className, reqjson.classStart, reqjson.classEnd]];
   // 接上連接池
   pool.getConnection((err, connection) => {
-    connection.query('UPDATE class SET ? where classDay = ? and className = ?', [reqjson, reqjson.classDay, reqjson.classNameOld], (error, results, fields) => {
+    connection.query('UPDATE class SET ? where classDay = ? and className = ?', [values, reqjson.classDay, reqjson.classNameOld], (error, results, fields) => {
       if (error) {
         res.send("U錯誤class" + error);
       } else {
