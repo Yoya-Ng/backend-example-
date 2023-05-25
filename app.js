@@ -166,7 +166,7 @@ app.put('/class', (req, res) => {
 
 app.post('/class', (req, res) => {
   const reqjson = JSON.parse(JSON.stringify(req.body));
-  let values = [[reqjson.classDay, reqjson.className, reqjson.classStart, reqjson.classEnd]];
+  let values = { classDay: reqjson.classDay, className: reqjson.className, classStart: reqjson.classStart, classEnd: reqjson.classEnd };
   // 接上連接池
   pool.getConnection((err, connection) => {
     connection.query('UPDATE class SET ? where classDay = ? and className = ?', [values, reqjson.classDay, reqjson.classNameOld], (error, results, fields) => {
